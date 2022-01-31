@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+
+.btn {
+  @apply px-4 py-2 border-2 shadow-sm text-sm font-medium rounded-md transition-all duration-150 ease-in focus:outline-none focus:ring focus:ring-offset-2;
+}
