@@ -61,7 +61,6 @@ export default function Audio() {
             y/o video) que son generados por un objeto de tipo MediaStream o
             HTMLMediaElement para analizarlos, procesarlos o guardarlos.
           </p>
-
           <hr />
         </div>
       </div>

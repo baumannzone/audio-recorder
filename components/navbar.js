@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/audio', label: 'Audio' },
-  { href: '/about', label: 'About' },
 ];
 
 export default function Navbar() {
