@@ -24,8 +24,7 @@ const social = [
 ];
 
 const playPopSound = () => {
-  const audio = new Audio('/pop.mp3');
-  audio.play();
+  new Audio('/pop.mp3').play();
 };
 
 const igIcon = () => (

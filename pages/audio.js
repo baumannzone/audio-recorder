@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import BaseHeader from '../components/baseHeader';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const docIcon = () => (
   <svg
@@ -20,15 +20,60 @@ const docIcon = () => (
 );
 
 export default function Audio() {
+  const [isRecording, setIsRecording] = useState(false);
   const [canRecord, setCanRecord] = useState(false);
+  const [mediaRecorder, setMediaRecorder] = useState(undefined);
+  // const [chunks, setChunks] = useState([]);
+  const [audios, setAudios] = useState([]);
+  const chunks = useRef([]);
+
+  const onDataAvailable = useCallback((e) => {
+    console.log('onDataAvailable', 111111);
+    if (e.data.size > 0) {
+      console.log('onDataAvailable', 22222);
+      // setChunks((chunks) => [...chunks, e.data]);
+      chunks.current.push(e.data);
+    }
+  }, []);
+
+  const onStop = useCallback(() => {
+    // const audio = new Audio();
+    // audio.src = URL.createObjectURL(
+    //   new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
+    // );
+
+    // console.log({ chunks });
+
+    const blob = new Blob(chunks.current, { type: 'audio/ogg; codecs=opus' });
+    const audioURL = window.URL.createObjectURL(blob);
+
+    setAudios((audios) => [...audios, { src: audioURL }]);
+    // setChunks([]);
+    chunks.current = [];
+
+    window.URL.revokeObjectURL(blob);
+  }, [chunks]);
 
   useEffect(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       setCanRecord(true);
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream) => {
+          console.log('<<<<<<<<<<<<<<<stream>>>>>>>>>>>>>>>', stream);
+          const mediaRecorder = new MediaRecorder(stream);
+          setMediaRecorder(mediaRecorder);
+
+          mediaRecorder.addEventListener('dataavailable', onDataAvailable);
+          mediaRecorder.addEventListener('stop', onStop);
+        })
+        .catch((err) => {
+          console.log({ err });
+        });
     } else {
       console.log('getUserMedia not supported on your browser!');
     }
-  }, []);
+  }, [chunks, onDataAvailable, onStop]);
 
   return (
     <>
@@ -40,6 +85,7 @@ export default function Audio() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <BaseHeader
         title="MediaStream Recording API"
         subtitle="aka Media Recorder API"
@@ -54,6 +100,7 @@ export default function Audio() {
           Documentación
         </a>
       </BaseHeader>
+
       <div className="bg-white py-16 px-4">
         <div className="prose prose-xl mx-auto prose-fuchsia">
           <p>
@@ -62,6 +109,52 @@ export default function Audio() {
             HTMLMediaElement para analizarlos, procesarlos o guardarlos.
           </p>
           <hr />
+
+          {canRecord && (
+            <>
+              <div className="flex justify-start">
+                <button
+                  className="btn border-white text-white bg-fuchsia-700 hover:bg-white hover:text-fuchsia-700 focus:ring-fuchsia-200"
+                  onClick={() => {
+                    mediaRecorder.start();
+                    setIsRecording(true);
+                  }}
+                  disabled={isRecording}
+                >
+                  Grabar
+                </button>
+                <button
+                  className="btn border-white text-white bg-fuchsia-700 hover:bg-white hover:text-fuchsia-700 focus:ring-fuchsia-200"
+                  onClick={() => {
+                    mediaRecorder.stop();
+                    setIsRecording(false);
+                  }}
+                  disabled={!isRecording}
+                >
+                  Detener
+                </button>
+              </div>
+            </>
+          )}
+
+          <hr />
+
+          <ul role="list" className="divide-y divide-gray-200">
+            {audios.map((audio, index) => (
+              <li key={index} className="py-4 flex items-center">
+                <audio controls src={audio.src} />
+
+                <button
+                  className="btn inline-flex justify-center border-white text-white bg-fuchsia-700 hover:bg-white hover:text-fuchsia-700 focus:ring-fuchsia-200"
+                  onClick={() => {
+                    setAudios((audios) => audios.filter((a, i) => i !== index));
+                  }}
+                >
+                  Eliminar
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </>
