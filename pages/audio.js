@@ -20,35 +20,23 @@ const docIcon = () => (
 );
 
 export default function Audio() {
-  const [isRecording, setIsRecording] = useState(false);
   const [canRecord, setCanRecord] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(undefined);
-  // const [chunks, setChunks] = useState([]);
   const [audios, setAudios] = useState([]);
   const chunks = useRef([]);
 
   const onDataAvailable = useCallback((e) => {
-    console.log('onDataAvailable', 111111);
     if (e.data.size > 0) {
-      console.log('onDataAvailable', 22222);
       // setChunks((chunks) => [...chunks, e.data]);
       chunks.current.push(e.data);
     }
   }, []);
 
   const onStop = useCallback(() => {
-    // const audio = new Audio();
-    // audio.src = URL.createObjectURL(
-    //   new Blob(chunks, { type: 'audio/ogg; codecs=opus' })
-    // );
-
-    // console.log({ chunks });
-
     const blob = new Blob(chunks.current, { type: 'audio/ogg; codecs=opus' });
     const audioURL = window.URL.createObjectURL(blob);
-
     setAudios((audios) => [...audios, { src: audioURL }]);
-    // setChunks([]);
     chunks.current = [];
 
     window.URL.revokeObjectURL(blob);
@@ -60,7 +48,6 @@ export default function Audio() {
       navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then((stream) => {
-          console.log('<<<<<<<<<<<<<<<stream>>>>>>>>>>>>>>>', stream);
           const mediaRecorder = new MediaRecorder(stream);
           setMediaRecorder(mediaRecorder);
 
@@ -68,10 +55,10 @@ export default function Audio() {
           mediaRecorder.addEventListener('stop', onStop);
         })
         .catch((err) => {
-          console.log({ err });
+          console.warn({ err });
         });
     } else {
-      console.log('getUserMedia not supported on your browser!');
+      console.warn('getUserMedia not supported on your browser!');
     }
   }, [chunks, onDataAvailable, onStop]);
 
@@ -105,16 +92,18 @@ export default function Audio() {
         <div className="prose prose-xl mx-auto prose-fuchsia">
           <p>
             La API de MediaStream Recording nos permite capturar datos (de audio
-            y/o video) que son generados por un objeto de tipo MediaStream o
-            HTMLMediaElement para analizarlos, procesarlos o guardarlos.
+            o video) que son generados por un objeto de tipo{' '}
+            <code>MediaStream</code> o <code>HTMLMediaElement</code> para
+            analizarlos, procesarlos o guardarlos.
           </p>
+
           <hr />
 
           {canRecord && (
             <>
               <div className="flex justify-start">
                 <button
-                  className="btn border-white text-white bg-fuchsia-700 hover:bg-white hover:text-fuchsia-700 focus:ring-fuchsia-200"
+                  className="btn btn-dark mr-1"
                   onClick={() => {
                     mediaRecorder.start();
                     setIsRecording(true);
@@ -124,7 +113,7 @@ export default function Audio() {
                   Grabar
                 </button>
                 <button
-                  className="btn border-white text-white bg-fuchsia-700 hover:bg-white hover:text-fuchsia-700 focus:ring-fuchsia-200"
+                  className="btn btn-dark"
                   onClick={() => {
                     mediaRecorder.stop();
                     setIsRecording(false);
@@ -137,15 +126,13 @@ export default function Audio() {
             </>
           )}
 
-          <hr />
-
-          <ul role="list" className="divide-y divide-gray-200">
+          <ul role="list" className="divide-y divide-gray-200 m-0">
             {audios.map((audio, index) => (
-              <li key={index} className="py-4 flex items-center">
-                <audio controls src={audio.src} />
+              <li key={audio.src} className="py-4 flex items-center">
+                <audio controls src={audio.src} loop={false} />
 
                 <button
-                  className="btn inline-flex justify-center border-white text-white bg-fuchsia-700 hover:bg-white hover:text-fuchsia-700 focus:ring-fuchsia-200"
+                  className="btn btn-ghost mx-2"
                   onClick={() => {
                     setAudios((audios) => audios.filter((a, i) => i !== index));
                   }}

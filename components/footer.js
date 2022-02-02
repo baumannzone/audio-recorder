@@ -37,7 +37,7 @@ export default function Footer() {
             href="https://baumannzone.dev"
             target="_blank"
             rel="noreferrer"
-            className=" text-fuchsia-300 hover:text-white hover:underline"
+            className=" text-fuchsia-300 hover:text-white hover:underline focus:outline-none focus:ring focus:ring-offset-2 focus:ring-fuchsia-200 border-red-300 rounded-md"
           >
             Jorge Baumann
           </a>

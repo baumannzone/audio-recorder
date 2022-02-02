@@ -14,7 +14,7 @@ const social = [
     link: 'https://instagram.com/baumannzone',
   },
   {
-    name: 'GitHub',
+    name: 'Twitch',
     link: 'https://twitch.com/baumannzone',
   },
   {
@@ -135,7 +135,7 @@ export default function Home() {
                     href="https://baumannzone.dev"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn flex justify-center border-fuchsia-500 text-fuchsia-500 bg-white hover:bg-fuchsia-500 hover:text-white focus:ring-fuchsia-200"
+                    className="btn btn-ghost"
                   >
                     baumannzone.dev
                   </a>

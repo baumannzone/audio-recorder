@@ -19,5 +19,13 @@ html {
 }
 
 .btn {
-  @apply px-4 py-2 border-2 shadow-sm text-sm font-medium rounded-md transition-all duration-150 ease-in focus:outline-none focus:ring focus:ring-offset-2;
+  @apply px-4 py-2 border-2 shadow-sm text-sm font-medium rounded-md transition-all duration-150 ease-in focus:outline-none focus:ring focus:ring-offset-2 focus:ring-fuchsia-200;
+}
+
+.btn-ghost {
+  @apply border-fuchsia-700 text-fuchsia-700 bg-white hover:bg-fuchsia-700 hover:text-white;
+}
+
+.btn-dark {
+  @apply border-white text-white bg-fuchsia-700 hover:bg-white hover:border-fuchsia-700 hover:text-fuchsia-700 disabled:bg-gray-300 disabled:hover:border-gray-300 disabled:hover:text-white;
 }
