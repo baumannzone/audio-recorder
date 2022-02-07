@@ -49,6 +49,30 @@ export default function Home() {
           content="Turn your browser into an audio recorder using native JavaScript functions of your browser"
         />
         <link rel="icon" href="/favicon.ico" />
+
+        <meta name="twitter:card" content="summary" key="twcard" />
+        <meta name="twitter:creator" content="@baumannzone" key="twhandle" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="The Audio Recorder" key="ogtitle" />
+        <meta
+          property="og:description"
+          content="Turn your browser into an audio recorder using native JavaScript functions of your browser"
+          key="ogdesc"
+        />
+        <meta property="og:type" content="website" key="ogtype" />
+        <meta property="og:locale" content="es_ES" />
+
+        <meta property="og:image" content="/og.png" key="ogimage" />
+        <meta property="og:image:secure_url" content="/og.png" key="ogimage" />
+        <meta property="og:image:type" content="image/png" key="ogimage_type" />
+        <meta property="og:image:width" content="1000" />
+        <meta property="og:image:height" content="1000" />
+        <meta
+          property="og:image:alt"
+          content="White micface with a dark purple background"
+          key="ogimage_alt"
+        />
       </Head>
       <BaseHeader
         title="🎙 Convierte tu navegador en una grabadora de audio 🎤"
