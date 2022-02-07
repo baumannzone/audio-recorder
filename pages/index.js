@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -40,6 +41,14 @@ const igIcon = () => (
 );
 
 export default function Home() {
+  useEffect(
+    () =>
+      console.log(
+        '%c Welcome to The Audio Recorder',
+        'font-weight: bold; font-size: 30px;color: red; text-shadow: 2px 2px 0 red , 4px 4px 0 orange , 6px 6px 0 yellow , 8px 8px 0 lime , 10px 10px 0 DeepSkyBlue , 12px 12px 0 indigo , 14px 14px 0 BlueViolet; margin: 10px; line-height: 3;'
+      ),
+    []
+  );
   return (
     <>
       <Head>
