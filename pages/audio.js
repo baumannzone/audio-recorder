@@ -28,7 +28,6 @@ export default function Audio() {
 
   const onDataAvailable = useCallback((e) => {
     if (e.data.size > 0) {
-      // setChunks((chunks) => [...chunks, e.data]);
       chunks.current.push(e.data);
     }
   }, []);
