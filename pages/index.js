@@ -46,7 +46,7 @@ export default function Home() {
         <title>🎙 Audio Recorder - Baumannzone</title>
         <meta
           name="description"
-          content="Turn your browser into an audio recorder using native JavaScript functions of your browser"
+          content="Convierte tu navegador en una grabadora de audio usando JavaScript y APIs del navegador. 🎙"
         />
         <link rel="icon" href="/favicon.ico" />
 
@@ -56,7 +56,7 @@ export default function Home() {
         <meta name="twitter:title" content="The Audio Recorder" />
         <meta
           name="twitter:description"
-          content="Turn your browser into an audio recorder using JavaScript"
+          content="Convierte tu navegador en una grabadora de audio usando JavaScript"
         />
         <meta
           name="twitter:image"
@@ -67,7 +67,7 @@ export default function Home() {
         <meta property="og:title" content="The Audio Recorder" key="ogtitle" />
         <meta
           property="og:description"
-          content="Turn your browser into an audio recorder using native JavaScript functions of your browser"
+          content="Convierte tu navegador en una grabadora de audio usando JavaScript"
           key="ogdesc"
         />
         <meta property="og:type" content="website" key="ogtype" />
